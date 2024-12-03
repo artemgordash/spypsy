@@ -18,6 +18,7 @@
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
     "@mui/joy": "^5.0.0-beta.48",
+    "devtools-protocol": "^0.0.1389614",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^7.0.2"
