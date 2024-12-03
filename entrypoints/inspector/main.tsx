@@ -96,14 +96,12 @@ const theme = extendTheme({
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <CssVarsProvider
-      theme={theme}
-      defaultMode={'dark'}
-      defaultColorScheme={'dark'}
-    >
-      <CssBaseline />
-      <App />
-    </CssVarsProvider>
-  </React.StrictMode>
+  <CssVarsProvider
+    theme={theme}
+    defaultMode={'dark'}
+    defaultColorScheme={'dark'}
+  >
+    <CssBaseline />
+    <App />
+  </CssVarsProvider>
 );
