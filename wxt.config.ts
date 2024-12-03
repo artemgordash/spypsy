@@ -4,6 +4,7 @@ import { defineConfig } from 'wxt';
 export default defineConfig({
   extensionApi: 'chrome',
   modules: ['@wxt-dev/module-react'],
+  manifestVersion: 3,
   manifest: {
     name: 'Google Maps Scraper',
     description: '',
@@ -21,9 +22,11 @@ export default defineConfig({
       'activeTab',
       'scripting',
       'storage',
+      'webRequest',
       'webNavigation',
       'notifications',
       'debugger',
+      'declarativeWebRequest',
     ],
   },
 });
