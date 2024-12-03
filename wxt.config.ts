@@ -18,6 +18,7 @@ export default defineConfig({
       },
     ],
     permissions: [
+      'cookies',
       'tabs',
       'activeTab',
       'scripting',
