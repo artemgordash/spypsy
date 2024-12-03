@@ -8,5 +8,5 @@ To simplify searching for bugs, vulnerabilities and optimizing performance
 
 ## Features
 
-- [] Website overview (3rd party scripts, styles, images, hosts, etc.)
-- [] Changes monitoring (requests, responses, runtime, storage, etc.)
+- [ ] Website overview (3rd party scripts, styles, images, hosts, etc.)
+- [ ] Changes monitoring (requests, responses, runtime, storage, etc.)
