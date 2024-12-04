@@ -8,11 +8,11 @@ export default defineBackground(() => {
     await browser.debugger.attach({ tabId }, '1.3');
     await browser.debugger.sendCommand({ tabId }, 'Debugger.enable');
     await browser.debugger.sendCommand({ tabId }, 'Network.enable');
-    // await browser.debugger.sendCommand({ tabId }, 'Storage.enable');
-    await browser.windows.create({
-      url: `inspector.html?id=${currentTab[0].id}`,
+    const browserWindow = await browser.windows.create({
+      url: `inspector.html?tabId=${tabId}`,
       type: 'panel',
       state: 'fullscreen',
     });
+    const mainTab = browserWindow.tabs?.at(0);
   });
 });
