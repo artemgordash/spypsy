@@ -18,14 +18,18 @@ export function HomePage() {
   });
 
   useEffect(() => {
-    browser.tabs.get(tabId).then((tab) => {
-      const origin = new URL(tab.url!).origin;
-      setTabData((prev) => ({
-        ...prev,
-        origin,
-      }));
+    browser.tabs.onUpdated.addListener((id, changeInfo) => {
+      if (id === tabId) {
+        browser.tabs.get(tabId).then((tab) => {
+          const origin = new URL(tab.url!).origin;
+          setTabData((prev) => ({
+            ...prev,
+            origin,
+          }));
 
-      document.title = `Spypsy - ${origin}`;
+          document.title = `Spypsy - ${origin}`;
+        });
+      }
     });
 
     browser.cookies.onChanged.addListener((changeInfo) => {
