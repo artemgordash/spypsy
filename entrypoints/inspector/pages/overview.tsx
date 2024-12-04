@@ -1,4 +1,4 @@
-import { Box } from '@mui/joy';
+import { Layout } from '@/entrypoints/inspector/components/layout';
 import { ProtocolMapping } from 'devtools-protocol/types/protocol-mapping';
 
 type TabData = {
@@ -8,7 +8,7 @@ type TabData = {
   cookies: chrome.cookies.CookieChangeInfo[];
 };
 
-export function HomePage() {
+export function OverviewPage() {
   const tabId = Number(new URLSearchParams(window.location.search).get('id'));
   const [tabData, setTabData] = useState<TabData>({
     origin: '',
@@ -67,5 +67,5 @@ export function HomePage() {
     });
   }, []);
 
-  return <Box>Hello world{tabId}</Box>;
+  return 'Hello world';
 }

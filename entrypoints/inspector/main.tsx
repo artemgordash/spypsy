@@ -7,6 +7,15 @@ import './App.css';
 
 const theme = extendTheme({
   components: {
+    JoyTab: {
+      styleOverrides: {
+        root: {
+          '&:hover[aria-selected="false"]': {
+            backgroundColor: 'transparent !important',
+          },
+        },
+      },
+    },
     JoyButton: {
       defaultProps: {
         variant: 'outlined',
@@ -57,7 +66,7 @@ const theme = extendTheme({
     dark: {
       palette: {
         common: {
-          black: '#0f1214',
+          black: '#1f1f1f',
         },
         primary: {
           '50': '#eef2ff',
@@ -76,7 +85,7 @@ const theme = extendTheme({
     light: {
       palette: {
         common: {
-          black: '#0f1214',
+          black: '#1f1f1f',
         },
         primary: {
           '50': '#eef2ff',
