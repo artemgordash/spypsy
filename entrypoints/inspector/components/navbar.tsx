@@ -1,4 +1,4 @@
-import { Tabs, TabList, tabClasses, Tab } from '@mui/joy';
+import { Tabs, TabList, tabClasses, Tab, Box } from '@mui/joy';
 import { useNavigate } from 'react-router';
 
 const tabs = [
@@ -28,7 +28,7 @@ export function Navbar() {
         navigate(tabs[valueIndex as number].href);
       }}
       aria-label='tabs'
-      sx={{ bgcolor: 'transparent' }}
+      sx={{ bgcolor: 'transparent', flexGrow: 1 }}
     >
       <TabList
         size='sm'
