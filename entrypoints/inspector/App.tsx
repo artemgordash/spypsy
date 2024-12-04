@@ -7,6 +7,12 @@ import { StoragesPage } from '@/entrypoints/inspector/pages/storages';
 import { Layout } from '@/entrypoints/inspector/components/layout';
 
 function App() {
+  const tabId = Number(
+    new URLSearchParams(window.location.search).get('tabId')
+  );
+
+  window.tabId = tabId;
+
   return (
     <BrowserRouter>
       <Routes>

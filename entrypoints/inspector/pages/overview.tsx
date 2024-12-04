@@ -8,7 +8,7 @@ type TabData = {
 };
 
 export function OverviewPage() {
-  const tabId = Number(new URLSearchParams(window.location.search).get('id'));
+  const tabId = window.tabId;
   const [tabData, setTabData] = useState<TabData>({
     origin: '',
     requests: [],
