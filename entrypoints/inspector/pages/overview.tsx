@@ -1,4 +1,3 @@
-import { Layout } from '@/entrypoints/inspector/components/layout';
 import { ProtocolMapping } from 'devtools-protocol/types/protocol-mapping';
 
 type TabData = {
@@ -18,6 +17,16 @@ export function OverviewPage() {
   });
 
   useEffect(() => {
+    browser.tabs.get(tabId).then((tab) => {
+      const origin = new URL(tab.url!).origin;
+      setTabData((prev) => ({
+        ...prev,
+        origin,
+      }));
+
+      document.title = `Spypsy - ${origin}`;
+    });
+
     browser.tabs.onUpdated.addListener((id, changeInfo) => {
       if (id === tabId) {
         browser.tabs.get(tabId).then((tab) => {
