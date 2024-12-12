@@ -28,7 +28,12 @@ export function Navbar() {
         navigate(tabs[valueIndex as number].href);
       }}
       aria-label='tabs'
-      sx={{ bgcolor: 'transparent', flexGrow: 1 }}
+      sx={{
+        flexGrow: 1,
+        position: 'sticky',
+        top: 0,
+        zIndex: 1,
+      }}
     >
       <TabList
         size='sm'
@@ -42,7 +47,7 @@ export function Navbar() {
         }}
       >
         {tabs.map((tab) => (
-          <Tab variant='outlined' key={tab.href}>
+          <Tab disableIndicator variant='outlined' key={tab.href}>
             {tab.label}
           </Tab>
         ))}

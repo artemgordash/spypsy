@@ -5,14 +5,26 @@ import { RuntimePage } from '@/entrypoints/inspector/pages/runtime';
 import { StoragesPage } from '@/entrypoints/inspector/pages/storages';
 import { Layout } from '@/entrypoints/inspector/components/layout';
 import { ProtocolMapping } from 'devtools-protocol/types/protocol-mapping';
-import './App.css';
 import { createContext } from 'react';
+import './App.css';
+
+type SpypsyRequest = ProtocolMapping.Events['Network.requestWillBeSent'][0] & {
+  spypsyType: 'request';
+};
+
+type SpypsyResponse = ProtocolMapping.Events['Network.responseReceived'][0] & {
+  spypsyType: 'response';
+};
+
+type SpypsyCookie = chrome.cookies.CookieChangeInfo & {
+  timestamp: number;
+  spypsyType: 'cookie';
+};
 
 type TabData = {
-  origin: string;
-  requests: ProtocolMapping.Events['Network.requestWillBeSent'][0][];
-  responses: ProtocolMapping.Events['Network.responseReceived'][0][];
-  cookies: chrome.cookies.CookieChangeInfo[];
+  requests: SpypsyRequest[];
+  responses: SpypsyResponse[];
+  cookies: SpypsyCookie[];
 };
 
 export const GlobalContext = createContext<{
@@ -20,7 +32,6 @@ export const GlobalContext = createContext<{
   setTabData: React.Dispatch<React.SetStateAction<TabData>>;
 }>({
   tabData: {
-    origin: '',
     requests: [],
     responses: [],
     cookies: [],
@@ -29,48 +40,26 @@ export const GlobalContext = createContext<{
 });
 
 function App() {
-  const tabId = Number(
-    new URLSearchParams(window.location.search).get('tabId')
-  );
   const [tabData, setTabData] = useState<TabData>({
-    origin: '',
     requests: [],
     responses: [],
     cookies: [],
   });
 
-  window.tabId = tabId;
-
+  console.log('🚀 ~ App ~ tabData:', tabData);
   useEffect(() => {
-    browser.tabs.get(tabId).then((tab) => {
-      const origin = new URL(tab.url!).origin;
-      setTabData((prev) => ({
-        ...prev,
-        origin,
-      }));
-
-      document.title = `Spypsy - ${origin}`;
-    });
-
-    browser.tabs.onUpdated.addListener((id, changeInfo) => {
-      if (id === tabId) {
-        browser.tabs.get(tabId).then((tab) => {
-          const origin = new URL(tab.url!).origin;
-          setTabData((prev) => ({
-            ...prev,
-            origin,
-          }));
-
-          document.title = `Spypsy - ${origin}`;
-        });
-      }
-    });
-
     browser.cookies.onChanged.addListener((changeInfo) => {
       setTabData((prev) => {
         return {
           ...prev,
-          cookies: [...prev.cookies, changeInfo],
+          cookies: [
+            ...prev.cookies,
+            {
+              ...changeInfo,
+              spypsyType: 'cookie',
+              timestamp: Date.now(),
+            },
+          ],
         };
       });
     });
@@ -82,7 +71,13 @@ function App() {
         setTabData((prev) => {
           return {
             ...prev,
-            requests: [...prev.requests, request],
+            requests: [
+              ...prev.requests,
+              {
+                ...request,
+                spypsyType: 'request',
+              },
+            ],
           };
         });
       }
@@ -94,7 +89,13 @@ function App() {
         setTabData((prev) => {
           return {
             ...prev,
-            responses: [...prev.responses, response],
+            responses: [
+              ...prev.responses,
+              {
+                ...response,
+                spypsyType: 'response',
+              },
+            ],
           };
         });
       }

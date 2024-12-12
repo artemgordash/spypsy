@@ -42,9 +42,7 @@ const theme = extendTheme({
         variant: 'soft',
       },
       styleOverrides: {
-        root: {
-          maxWidth: 300,
-        },
+        root: {},
       },
     },
     JoyLink: {
@@ -57,46 +55,6 @@ const theme = extendTheme({
             transition: 'opacity .3s',
             opacity: '.5',
           },
-        },
-      },
-    },
-  },
-  colorSchemes: {
-    dark: {
-      palette: {
-        common: {
-          black: '#1f1f1f',
-        },
-        primary: {
-          '50': '#eef2ff',
-          '100': '#e0e7ff',
-          '200': '#c7d2fe',
-          '300': '#a5b4fc',
-          '400': '#818cf8',
-          '500': '#6366f1',
-          '600': '#4f46e5',
-          '700': '#4338ca',
-          '800': '#3730a3',
-          '900': '#312e81',
-        },
-      },
-    },
-    light: {
-      palette: {
-        common: {
-          black: '#1f1f1f',
-        },
-        primary: {
-          '50': '#eef2ff',
-          '100': '#e0e7ff',
-          '200': '#c7d2fe',
-          '300': '#a5b4fc',
-          '400': '#818cf8',
-          '500': '#6366f1',
-          '600': '#4f46e5',
-          '700': '#4338ca',
-          '800': '#3730a3',
-          '900': '#312e81',
         },
       },
     },

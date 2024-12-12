@@ -4,15 +4,38 @@ export default defineBackground(() => {
       active: true,
       currentWindow: true,
     });
-    const tabId = currentTab[0].id;
-    await browser.debugger.attach({ tabId }, '1.3');
-    await browser.debugger.sendCommand({ tabId }, 'Debugger.enable');
-    await browser.debugger.sendCommand({ tabId }, 'Network.enable');
+
+    const tabsIds = currentTab.map((tab) => tab.id);
+
+    await Promise.all(
+      tabsIds.map(async (tabId) => {
+        await attachEverything(tabId!);
+      })
+    );
+
+    async function attachEverything(tabId: number) {
+      try {
+        await browser.debugger.attach({ tabId }, '1.3');
+        await browser.debugger.sendCommand({ tabId }, 'Debugger.enable');
+        await browser.debugger.sendCommand({ tabId }, 'Network.enable');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    browser.tabs.onCreated.addListener(async (tab) => {
+      await attachEverything(tab.id!);
+    });
+
+    browser.tabs.onRemoved.addListener(async (tabId) => {
+      await browser.debugger.detach({ tabId });
+    });
+
     const browserWindow = await browser.windows.create({
-      url: `inspector.html?tabId=${tabId}`,
+      url: `inspector.html`,
       type: 'panel',
       state: 'fullscreen',
     });
-    const mainTab = browserWindow.tabs?.at(0);
+    const spypsyTab = browserWindow.tabs?.at(0);
   });
 });
